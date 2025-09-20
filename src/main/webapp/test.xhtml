@@ -1,21 +1,47 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="jakarta.faces.facelets"
       xmlns:f="jakarta.faces.core"
       xmlns:h="jakarta.faces.html"
       xmlns:p="primefaces">
 
-    <h:head>
-        <title>PrimeFaces Test</title>
-        <h:outputScript name="test.js" />
-        <h:outputStylesheet name="test.css" />
-    </h:head>
-    <h:body>
+<h:head>
+    <title>PrimeFaces Test</title>
+    <h:outputScript name="test.js"/>
+    <h:outputStylesheet name="test.css"/>
+</h:head>
+<h:body>
+    <h:form id="frmTest">
+        <p:dataTable var="customer" value="#{dtPaginatorView.customers}" rows="10"
+                     paginator="true" paginatorPosition="both"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                     rowsPerPageTemplate="5,10,{ShowAll|'All'}">
+            <p:ajax event="page"/>
+            <p:column headerText="Name">
+                <h:outputText value="#{customer.name}"/>
+            </p:column>
+            <p:column headerText="Country">
+                <h:outputText value="#{customer.country.name}"/>
+            </p:column>
 
-        <h1>#{testView.string}</h1>
-        <h:form id="frmTest">
+            <p:column headerText="Company">
+                <h:outputText value="#{customer.company}"/>
+            </p:column>
 
-        </h:form>
+            <p:column headerText="Representative">
+                <h:outputText value="#{customer.representative.name}"/>
+            </p:column>
 
-    </h:body>
+            <f:facet name="paginatorTopLeft">
+                <p:commandButton type="button" icon="pi pi-refresh"/>
+            </f:facet>
+
+            <f:facet name="paginatorBottomRight">
+                <p:commandButton type="button" icon="pi pi-cloud-upload"/>
+            </f:facet>
+
+        </p:dataTable>
+    </h:form>
+
+</h:body>
 </html>
